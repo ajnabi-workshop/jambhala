@@ -36,6 +36,7 @@
                 # Non-Haskell applications required by Jambhala
                 shell.buildInputs = with pkgs; [
                   bashInteractive
+                  deno
                   gnugrep
                   haskellPackages.cabal-fmt
                   haskellPackages.fourmolu
@@ -52,6 +53,7 @@
                     vscode = pkgs.vscodium;
                     vscodeExtensions = with pkgs.vscode-extensions; [
                       asvetliakov.vscode-neovim
+                      denoland.vscode-deno
                       dracula-theme.theme-dracula
                       haskell.haskell
                       jnoortheen.nix-ide
