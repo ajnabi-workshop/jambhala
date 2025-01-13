@@ -71,7 +71,7 @@ auctionLambda AuctionParam {..} highBid redeemer ctx@(ScriptContext TxInfo {..} 
         , -- The bid is not too late.
           to apEndTime `contains` txInfoValidRange
         , -- The previous highest bid should be refunded.
-          refundsPrevHighBidder txInfoOutputs highBid
+          refundsPrevious txInfoOutputs highBid
         , -- A correct new datum is produced, containing the new highest bid.
           validContOutput (getContinuingOutputs ctx) apAsset bid
         ]
@@ -81,7 +81,7 @@ auctionLambda AuctionParam {..} highBid redeemer ctx@(ScriptContext TxInfo {..} 
         , -- The seller gets the highest bid.
           paysSeller txInfoOutputs apSeller highBid
         , -- The highest bidder gets the asset (seller reclaims if no bid).
-          paysAsset txInfoOutputs apSeller apAsset highBid
+          paysAssetValue txInfoOutputs apSeller apAsset highBid
         ]
 {-# INLINEABLE auctionLambda #-}
 
@@ -100,28 +100,28 @@ paysAda :: BidAmt -> [TxOut] -> PubKeyHash -> BuiltinString -> Bool
 paysAda = paysValue . lovelaceValueOf
 {-# INLINEABLE paysAda #-}
 
-refundsPrevHighBidder :: [TxOut] -> Maybe Bid -> Bool
-refundsPrevHighBidder txInfoOutputs =
+refundsPrevious :: [TxOut] -> Maybe Bid -> Bool
+refundsPrevious txInfoOutputs =
   -- mBid
   maybe True (\(Bid bidder prevHighBid) -> paysAda prevHighBid txInfoOutputs bidder "bid refund")
 -- case mBid of
 -- Nothing -> True
 -- Just (Bid bidder prevHighBid) ->
-{-# INLINEABLE refundsPrevHighBidder #-}
+{-# INLINEABLE refundsPrevious #-}
 
 paysSeller :: [TxOut] -> PubKeyHash -> Maybe Bid -> Bool
 paysSeller txInfoOutputs seller =
   maybe True (\(Bid _ amt) -> paysAda amt txInfoOutputs seller "seller payment")
 {-# INLINEABLE paysSeller #-}
 
-paysAsset :: [TxOut] -> PubKeyHash -> Value -> Maybe Bid -> Bool
-paysAsset txInfoOutputs seller asset =
+paysAssetValue :: [TxOut] -> PubKeyHash -> Value -> Maybe Bid -> Bool
+paysAssetValue txInfoOutputs seller asset =
   maybe
     -- Seller reclaims asset if no bid
     (paysValue asset txInfoOutputs seller "asset reclamation")
     -- Else asset paid to highest bidder
     (\(Bid bidder _) -> paysValue asset txInfoOutputs bidder "winner asset")
-{-# INLINEABLE paysAsset #-}
+{-# INLINEABLE paysAssetValue #-}
 
 validContOutput :: [TxOut] -> Value -> Bid -> Bool
 validContOutput [o] asset (Bid bidder amt) = case (txOutDatum o, txOutValue o) of
