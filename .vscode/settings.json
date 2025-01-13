@@ -21,5 +21,8 @@
   "deno.enable": true,
   "deno.unstable": true,
   "deno.lint": false,
-  "editor.defaultFormatter": "denoland.vscode-deno"
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "[haskell]": {
+    "editor.defaultFormatter": "haskell.haskell"
+  }
 }
