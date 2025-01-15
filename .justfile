@@ -136,12 +136,12 @@ node-port := "1337"
   setup.sh
 
 # run Aiken tests, build, and write validator(s)
-@aiken VALIDATOR='' *BUILD_FLAGS='':
-  @cd jambhalaiken && \
-  aiken check && \
-  aiken build {{ BUILD_FLAGS }} && \
-  if [ -n "{{ VALIDATOR }}" ]; then \
-    python write.py -v {{ VALIDATOR }}; \
-  else \
-    python write.py; \
-  fi
+# @aiken VALIDATOR='' *BUILD_FLAGS='':
+#   @cd jambhalaiken && \
+#   aiken check && \
+#   aiken build {{ BUILD_FLAGS }} && \
+#   if [ -n "{{ VALIDATOR }}" ]; then \
+#     python write.py -v {{ VALIDATOR }}; \
+#   else \
+#     python write.py; \
+#   fi
