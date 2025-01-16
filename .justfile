@@ -90,10 +90,10 @@ node-port := "1337"
   --config {{ config-path }}/config.json
 
 # launch jambhalucid
-@lucid:
-  cd jambhalucid && if [ ! -d "node_modules" ]; then \
-    pnpm install; \
-  fi && pnpm dev
+# @lucid:
+#   cd jambhalucid && if [ ! -d "node_modules" ]; then \
+#     pnpm install; \
+#   fi && pnpm dev
 
 # clean nix store
 @gc:
