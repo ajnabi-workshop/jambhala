@@ -259,8 +259,7 @@ Next, the setup wizard will prompt you to install `cardano-node` and `cardano-cl
   - If you've already installed `cardano-node` and `cardano-cli` through other means, you can also configure your existing installation to work with Jambhala.
   - See the **[Cardano EZ-Installer README](./cardano-ez-installer/README.md)** for more information.
   - A tutorial with guided exercises for learning to use `cardano-cli` is provided in the `cardano-cli-guru/tutorial` directory.
-  - The EZ-Installer will also ask if you want to install **[Ogmios](https://ogmios.dev/)**. Choose `y` if you want to use the optional `cardano-devnet` add-on utility, which required Ogmios.
-
+  
 ***
 ### 7. **Start coding**
 ***
